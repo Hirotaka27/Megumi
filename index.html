@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megumi Fushiguro Fanpage</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFGuLOPp9bCDlwvAFuQzWyoPEZdFEBkwNRWSoDeZYbEXKavDyfXG2zl4jhmXjlhhMDtUs&usqp=CAU")
+                no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .text {
+            color: rgb(252, 252, 252);
+            margin-top: 10px;
+            font-size: 1.5rem;
+        }
+        .icon-fanart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .fanart {
+            max-width: 50vmin;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease; /* Menambahkan transisi warna */
+        }
+        .fanart:hover {
+            transform: scale(1.1); /* Efek scaling saat hover */
+            color: blue; /* Perubahan warna teks saat dihover */
+        }
+        .megumi-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 50vmin;
+            display: none;
+            text-align: center;
+            color: #fff;
+        }
+        .megumi {
+            max-width: 100%;
+        }
+        .megumi-text {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: rgb(255, 255, 255);
+        }
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden; /* Tambahan untuk mencegah overflow */
+        }
+        .firework {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: explode 1.5s ease-out infinite;
+        }
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(45deg);
+            animation: float 3s linear infinite;
+            opacity: 0.7;
+        }
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+        .heart::after {
+            top: 0;
+            left: -10px;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-600px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+        .typing {
+            border-right: 2px solid;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        @keyframes blink-caret {
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: white;
+            }
+        }
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            20%, 60% {
+                transform: translateX(-10px);
+            }
+            40%, 80% {
+                transform: translateX(10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="icon-fanart">
+        <img src="./asset/megumifanart.png" alt="Fanart Megumi" class="fanart" id="fanart">
+        <h1 class="text hai typing" id="textHai">Hai Yena , Coba sentuh aku </h1>
+    </div>
+    <div class="megumi-container">
+        <img src="./asset/hovermegumi.png" alt="Megumi Fushiguro" class="megumi fanart" id="megumi">
+        <div class="megumi-text" id="megumiText">
+            <p class="typing">I LOVE YOU YENA ❤</p>
+            <p class="typing">Fushiguro Lovetakers</p>
+        </div>
+    </div>
+    <div class="fireworks"></div>
+    <div class="hearts"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fanart = document.querySelector(".fanart");
+            const textHai = document.querySelector("#textHai");
+            const megumiContainer = document.querySelector(".megumi-container");
+            const fireworksContainer = document.querySelector(".fireworks");
+            const heartsContainer = document.querySelector(".hearts");
+
+            fanart.addEventListener("click", function () {
+                fanart.style.display = "none";
+                textHai.style.display = "none";
+                megumiContainer.style.display = "block";
+                megumiContainer.style.marginTop = "10%";
+                showFireworks();
+                showHearts();
+            });
+
+            function showFireworks() {
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(createFirework, i * 100);
+                }
+            }
+
+            function createFirework() {
+                const firework = document.createElement("div");
+                firework.classList.add("firework");
+                firework.style.left = Math.random() * 100 + "vw";
+                firework.style.top = Math.random() * 100 + "vh";
+                firework.style.width = Math.random() * 5 + 5 + "vmin";
+                firework.style.height = firework.style.width;
+                firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                fireworksContainer.appendChild(firework);
+
+                firework.addEventListener("animationend", () => {
+                    firework.remove();
+                    createFirework();  
+                });
+            }
+
+            function showHearts() {
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(createHeart, i * 300);
+                }
+            }
+
+            function createHeart() {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.bottom = 0;
+                heartsContainer.appendChild(heart);
+
+                heart.addEventListener("animationend", () => {
+                    heart.remove();
+                });
+            }
+
+            const typingElements = document.querySelectorAll('.typing');
+            typingElements.forEach(el => {
+                el.addEventListener('animationend', () => {
+                    if (el.style.animationName === 'typing') {
+                        if (el.textContent === "I LOVE YOU YENA ") {
+                            el.textContent = "I LOVE YOU YENA - Fushiguro Lovetakers";
+                        }
+                    }
+                });
+            });
+
+            fanart.addEventListener("mouseover", function () {
+                fanart.style.color = "blue";
+                fanart.textContent = "I LOVE YOU YENA - Megumi Fushiguro";
+            });
+
+            fanart.addEventListener("mouseout", function () {
+                fanart.style.color = "";
+                fanart.textContent = "Hai Yena , Coba sentuh aku ";
+            });
+        });
+    </script>
+</body>
+</html>
